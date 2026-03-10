@@ -25,18 +25,39 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ data, onPersonClick 
   return (
     <div className="bg-white border border-stone-200 rounded-2xl p-8 shadow-sm overflow-x-auto">
       <div className="min-w-[1200px] relative pt-12 pb-12">
+        {/* Background Grid Lines */}
+        <div className="absolute inset-0 pointer-events-none">
+          {Array.from({ length: 9 }, (_, i) => 1860 + i * 20).map(year => {
+            const left = ((year - startYear) / totalYears) * 100;
+            return (
+              <div 
+                key={year} 
+                className="absolute top-0 bottom-0 border-l border-dashed border-stone-100" 
+                style={{ left: `${left}%` }}
+              />
+            );
+          })}
+        </div>
+
         {/* Year Markers */}
-        <div className="absolute top-0 left-0 w-full flex justify-between border-b border-stone-100 pb-2">
-          {Array.from({ length: 9 }, (_, i) => 1860 + i * 20).map(year => (
-            <div key={year} className="text-[10px] font-bold text-stone-300 relative">
-              <div className="absolute left-1/2 -bottom-2 w-px h-2 bg-stone-200" />
-              {year}
-            </div>
-          ))}
+        <div className="absolute top-0 left-0 w-full h-8 border-b border-stone-100">
+          {Array.from({ length: 9 }, (_, i) => 1860 + i * 20).map(year => {
+            const left = ((year - startYear) / totalYears) * 100;
+            return (
+              <div 
+                key={year} 
+                className="absolute text-[10px] font-bold text-stone-300 -translate-x-1/2"
+                style={{ left: `${left}%` }}
+              >
+                {year}
+                <div className="absolute left-1/2 top-4 w-px h-2 bg-stone-200" />
+              </div>
+            );
+          })}
         </div>
 
         {/* Timeline Rows */}
-        <div className="space-y-12 mt-12">
+        <div className="space-y-12 mt-12 relative z-10">
           {sortedData.map((person) => {
             const left = getPosition(person.birthDate);
             
