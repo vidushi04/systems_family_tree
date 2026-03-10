@@ -66,10 +66,12 @@ export const TimelineView: React.FC<TimelineViewProps> = ({ data, onPersonClick 
                         <span className="text-[9px] text-stone-400 uppercase tracking-tighter">Born</span>
                         <span>{new Date(person.birthDate).getFullYear()}</span>
                       </div>
-                      <div className="flex flex-col text-right">
-                        <span className="text-[9px] text-stone-400 uppercase tracking-tighter">Died</span>
-                        <span>{person.deathDate ? new Date(person.deathDate).getFullYear() : 'Present'}</span>
-                      </div>
+                      {person.deathDate && (
+                        <div className="flex flex-col text-right">
+                          <span className="text-[9px] text-stone-400 uppercase tracking-tighter">Died</span>
+                          <span>{new Date(person.deathDate).getFullYear()}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.button>
